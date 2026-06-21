@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function EditorialPage() {
   const articles = [
@@ -44,11 +45,13 @@ export default function EditorialPage() {
             transition={{ duration: 0.8 }}
             className={`flex flex-col ${index % 2 !== 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center`}
           >
-            <div className="w-full lg:w-1/2 aspect-[4/3] overflow-hidden bg-muted">
-              <img 
+            <div className="relative aspect-[4/5] bg-muted w-full overflow-hidden group">
+              <Image 
                 src={article.image} 
                 alt={article.title} 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className={`w-full lg:w-1/2 flex flex-col justify-center ${index % 2 !== 0 ? 'lg:items-end lg:text-right' : ''}`}>

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
@@ -158,11 +159,13 @@ export default function CheckoutPage() {
             <div className="space-y-4 mb-6 max-h-[40vh] overflow-y-auto pr-2">
               {items.map((item) => (
                 <div key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`} className="flex space-x-4">
-                  <div className="w-16 h-20 relative bg-background flex-shrink-0">
-                    <img 
+                  <div className="relative w-16 h-20 bg-muted overflow-hidden flex-shrink-0">
+                    <Image 
                       src={item.product.images[0]} 
                       alt={item.product.name}
-                      className="object-cover w-full h-full"
+                      fill
+                      sizes="100px"
+                      className="object-cover"
                     />
                     <span className="absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-accent text-accent-foreground text-xs font-bold rounded-full">
                       {item.quantity}

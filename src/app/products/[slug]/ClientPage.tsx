@@ -10,6 +10,7 @@ import { SizeGuideModal } from "@/components/ui/SizeGuideModal";
 import { ProductCard } from "@/components/product/ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Heart, Star, ChevronDown, ChevronUp } from "lucide-react";
+import Image from "next/image";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -94,7 +95,7 @@ export default function ProductDetailPage() {
                     selectedImageIdx === idx ? "ring-2 ring-accent ring-offset-2 ring-offset-background" : "border-2 border-transparent opacity-60 hover:opacity-100"
                   }`}
                 >
-                  <img src={img} alt={`${product.name} - view ${idx + 1}`} className="w-full h-full object-cover" />
+                  <Image src={img} alt={`${product.name} - view ${idx + 1}`} fill sizes="100px" className="object-cover" />
                 </button>
               ))}
             </div>
@@ -102,10 +103,13 @@ export default function ProductDetailPage() {
 
           {/* Main Image */}
           <div className="relative aspect-[3/4] md:aspect-[4/5] bg-muted overflow-hidden flex-1">
-            <img 
+            <Image 
               src={product.images[selectedImageIdx]} 
               alt={product.name} 
-              className="w-full h-full object-cover transition-opacity duration-300"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-opacity duration-300"
             />
           </div>
         </motion.div>

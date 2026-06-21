@@ -8,6 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart } from "lucide-react";
 import { useWishlistStore } from "@/store/wishlistStore";
 
+import Image from "next/image";
+
 interface ProductCardProps {
   product: Product;
 }
@@ -50,16 +52,22 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <Link href={`/products/${product.id}`} className="relative aspect-[4/5] overflow-hidden bg-muted mb-4 block border-2 border-transparent group-hover:border-accent transition-colors duration-300">
         <AnimatePresence initial={false}>
-          <motion.img
+          <motion.div
             key={currentImageIndex}
-            src={product.images[currentImageIndex]}
-            alt={product.name}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
-          />
+            className="absolute inset-0"
+          >
+            <Image
+              src={product.images[currentImageIndex]}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+          </motion.div>
         </AnimatePresence>
       </Link>
 

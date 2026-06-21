@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/loading/Skeleton";
 import { useAuthStore } from "@/store/authStore";
+import Image from "next/image";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal } = useCartStore();
@@ -91,11 +92,13 @@ export function CartDrawer() {
               ) : (
                 items.map((item) => (
                   <div key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`} className="flex space-x-4">
-                    <div className="w-24 h-32 relative bg-muted flex-shrink-0">
-                      <img 
+                    <div className="relative h-24 w-20 flex-shrink-0 overflow-hidden bg-muted">
+                      <Image 
                         src={item.product.images[0]} 
-                        alt={item.product.name}
-                        className="object-cover w-full h-full"
+                        alt={item.product.name} 
+                        fill
+                        sizes="100px"
+                        className="object-cover"
                       />
                     </div>
                     

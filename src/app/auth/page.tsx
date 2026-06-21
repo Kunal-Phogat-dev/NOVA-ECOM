@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { useAuthStore } from "@/store/authStore";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
@@ -28,10 +29,13 @@ function AuthForm() {
     <div className="min-h-[80vh] flex">
       {/* Left side - Image */}
       <div className="hidden lg:block w-1/2 relative bg-muted">
-        <img 
+        <Image 
           src="/images/hero_image.png" 
           alt="Luxury Fashion" 
-          className="absolute inset-0 w-full h-full object-cover opacity-80"
+          fill
+          sizes="50vw"
+          priority
+          className="object-cover opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         <div className="absolute bottom-12 left-12 max-w-md">
