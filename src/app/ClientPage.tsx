@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { mockProducts } from "@/lib/mock-data";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   const newArrivals = mockProducts.filter((p) => p.isNew).slice(0, 4);
@@ -22,9 +23,16 @@ export default function Home() {
           initial={{ scale: 1.0 }}
           animate={{ scale: 1.05 }}
           transition={{ duration: 20, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url("/images/hero_image.png")' }}
-        />
+          className="absolute inset-0 z-0"
+        >
+          <Image 
+            src="/images/hero_image.png" 
+            alt="Hero Background" 
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
         {/* Dynamic gradient overlay: dark on left for text, transparent on right for model */}
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
         <div className="absolute inset-0 z-0 bg-gradient-to-t from-background via-transparent to-transparent" />

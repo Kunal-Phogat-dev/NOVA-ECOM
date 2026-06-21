@@ -1,5 +1,7 @@
 import ProductDetailClient from "./ClientPage";
 
+export const dynamic = 'force-dynamic';
+
 async function fetchProductData() {
   // Simulate network delay to demonstrate the premium PDP loading skeleton
   await new Promise((resolve) => setTimeout(resolve, 1500));
