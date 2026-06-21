@@ -11,6 +11,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Heart, Star, ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
+import Loading from "./loading";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -26,9 +27,38 @@ export default function ProductDetailPage() {
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Image Preloader Logic
+    const images = Array.from(document.images);
+    let loadedCount = 0;
+    
+    if (images.length === 0) {
+      setImagesLoaded(true);
+      return;
+    }
+
+    const checkDone = () => {
+      loadedCount++;
+      if (loadedCount >= images.length) {
+        setImagesLoaded(true);
+      }
+    };
+
+    images.forEach(img => {
+      if (img.complete) {
+        checkDone();
+      } else {
+        img.addEventListener('load', checkDone);
+        img.addEventListener('error', checkDone);
+      }
+    });
+
+    const timeout = setTimeout(() => setImagesLoaded(true), 2500);
+    return () => clearTimeout(timeout);
   }, []);
 
   const recommendedProducts = mockProducts.filter((p) => p.id !== product?.id).slice(0, 4);
@@ -74,8 +104,21 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
+    <>
+      <AnimatePresence>
+        {!imagesLoaded && (
+          <motion.div 
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-50 bg-background overflow-hidden flex flex-col"
+          >
+            <Loading />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className={`container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 ${!imagesLoaded ? 'invisible h-0 overflow-hidden' : 'visible h-auto'}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         
         {/* Product Image Gallery */}
         <motion.div 
@@ -311,5 +354,6 @@ export default function ProductDetailPage() {
 
       <SizeGuideModal isOpen={isSizeGuideOpen} onClose={() => setIsSizeGuideOpen(false)} category={product.category} />
     </div>
+    </>
   );
 }

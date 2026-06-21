@@ -3,19 +3,65 @@
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { mockProducts } from "@/lib/mock-data";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import Loading from "./loading";
 
 export default function Home() {
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   const newArrivals = mockProducts.filter((p) => p.isNew).slice(0, 4);
+
+  useEffect(() => {
+    const images = Array.from(document.images);
+    let loadedCount = 0;
+    
+    if (images.length === 0) {
+      setImagesLoaded(true);
+      return;
+    }
+
+    const checkDone = () => {
+      loadedCount++;
+      if (loadedCount >= images.length) {
+        setImagesLoaded(true);
+      }
+    };
+
+    images.forEach(img => {
+      if (img.complete) {
+        checkDone();
+      } else {
+        img.addEventListener('load', checkDone);
+        img.addEventListener('error', checkDone);
+      }
+    });
+
+    const timeout = setTimeout(() => setImagesLoaded(true), 2500);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const scrollToProducts = () => {
     document.getElementById("products-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <>
+      <AnimatePresence>
+        {!imagesLoaded && (
+          <motion.div 
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-50 bg-background overflow-hidden"
+          >
+            <Loading />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      <div className={`flex flex-col w-full ${!imagesLoaded ? 'invisible h-0 overflow-hidden' : 'visible h-auto'}`}>
       {/* Hero Section */}
       <section className="relative h-[85vh] w-full bg-muted flex items-center justify-center overflow-hidden">
         {/* Background Image with slow zoom animation */}
@@ -92,6 +138,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
