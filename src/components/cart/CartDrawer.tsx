@@ -9,12 +9,15 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/loading/Skeleton";
 import { useAuthStore } from "@/store/authStore";
 import Image from "next/image";
+import { toast } from "sonner";
+import { Spinner } from "@/components/ui/loading/Spinner";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal } = useCartStore();
   const { isAuthenticated } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -107,7 +110,10 @@ export function CartDrawer() {
                         <div className="flex justify-between items-start">
                           <h3 className="font-semibold text-sm uppercase">{item.product.name}</h3>
                           <button 
-                            onClick={() => removeItem(item.product.id, item.selectedSize, item.selectedColor)}
+                            onClick={() => {
+                              removeItem(item.product.id, item.selectedSize, item.selectedColor);
+                              toast("Item removed from cart");
+                            }}
                             className="text-muted-foreground hover:text-accent transition-colors"
                           >
                             <X className="w-4 h-4" />
@@ -162,11 +168,22 @@ export function CartDrawer() {
                 <p className="text-xs text-muted-foreground mb-6">Shipping and taxes calculated at checkout.</p>
                 
                 {isMounted && isAuthenticated ? (
-                  <Link href="/checkout" onClick={closeCart}>
-                    <Button className="w-full" size="lg">
-                      PROCEED TO CHECKOUT
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="w-full" 
+                    size="lg" 
+                    onClick={() => {
+                      setIsCheckingOut(true);
+                      setTimeout(() => {
+                        setIsCheckingOut(false);
+                        closeCart();
+                        window.location.href = "/checkout";
+                      }, 1000);
+                    }}
+                    disabled={isCheckingOut}
+                  >
+                    {isCheckingOut ? <Spinner size="sm" className="mr-2" /> : null}
+                    {isCheckingOut ? "PROCESSING..." : "PROCEED TO CHECKOUT"}
+                  </Button>
                 ) : (
                   <Link href="/auth?redirect=/checkout" onClick={closeCart}>
                     <Button className="w-full" size="lg">

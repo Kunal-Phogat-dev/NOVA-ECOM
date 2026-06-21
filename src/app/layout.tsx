@@ -10,6 +10,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { PageTransition } from "@/components/ui/loading/PageTransition";
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -30,10 +31,11 @@ export default function RootLayout({
           href="https://kunalphogat.com" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="fixed bottom-4 right-4 z-50 text-[10px] uppercase tracking-widest text-muted-foreground/50 hover:text-accent transition-colors bg-background/50 backdrop-blur-sm px-2 py-1 border border-border/30 rounded-none"
+          className="fixed bottom-4 right-4 z-[40] text-[10px] uppercase tracking-widest text-muted-foreground/50 hover:text-accent transition-colors bg-background/50 backdrop-blur-sm px-2 py-1 border border-border/30 rounded-none"
         >
           Built by Kunal Phogat
         </a>
+        <Toaster theme="dark" position="bottom-left" toastOptions={{ style: { background: '#0a0a0a', border: '1px solid #333', borderRadius: '0' } }} />
       </body>
     </html>
   );

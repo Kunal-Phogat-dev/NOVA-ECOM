@@ -7,8 +7,8 @@ import type { Product } from "@/lib/mock-data";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart } from "lucide-react";
 import { useWishlistStore } from "@/store/wishlistStore";
-
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: Product;
@@ -24,8 +24,13 @@ export function ProductCard({ product }: ProductCardProps) {
   const toggleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!isMounted) return;
-    if (hasItem(product.id)) removeItem(product.id);
-    else addItem(product);
+    if (hasItem(product.id)) {
+      removeItem(product.id);
+      toast("Removed from wishlist");
+    } else {
+      addItem(product);
+      toast.success("Added to wishlist");
+    }
   };
 
   useEffect(() => {
@@ -49,8 +54,10 @@ export function ProductCard({ product }: ProductCardProps) {
       className="group relative flex flex-col"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.2 }}
     >
-      <Link href={`/products/${product.id}`} className="relative aspect-[4/5] overflow-hidden bg-muted mb-4 block border-2 border-transparent group-hover:border-accent transition-colors duration-300">
+      <Link href={`/products/${product.id}`} className="relative aspect-[4/5] overflow-hidden bg-muted mb-4 block border-2 border-transparent group-hover:border-accent transition-all duration-300">
         <AnimatePresence initial={false}>
           <motion.div
             key={currentImageIndex}
@@ -73,27 +80,28 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="flex flex-col space-y-1">
         <div className="flex justify-between items-start">
-          <Link href={`/products/${product.id}`} className="block">
+          <div>
             <h3 className="text-base font-semibold tracking-wider uppercase text-white group-hover:text-accent transition-colors">
               {product.name}
             </h3>
-          </Link>
+            <p className="text-sm text-white/80">${product.price.toFixed(2)}</p>
+          </div>
           <div className="flex items-center">
             {product.isNew && (
               <div className="bg-accent text-black text-[10px] font-bold px-2 py-0.5 mr-3 tracking-widest">
                 NEW
               </div>
             )}
-            <button 
+            <motion.button 
+              whileTap={{ scale: 0.9 }}
               onClick={toggleWishlist}
-              className="text-muted-foreground hover:text-accent transition-colors"
-              aria-label="Toggle wishlist"
+              className="text-muted-foreground hover:text-accent transition-colors p-1"
+              aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
             >
-              <Heart className={`h-4 w-4 ${isWishlisted ? "fill-accent text-accent" : ""}`} />
-            </button>
+              <Heart className={`h-5 w-5 ${isWishlisted ? "fill-accent text-accent" : ""}`} />
+            </motion.button>
           </div>
         </div>
-        <p className="text-sm text-white/80">${product.price}</p>
         
         {/* Underline matching the mockup */}
         <div className="mt-4 h-[1px] w-full bg-border group-hover:bg-accent transition-colors duration-300" />

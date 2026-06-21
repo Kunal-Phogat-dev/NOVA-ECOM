@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Heart, Star, ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import Loading from "./loading";
+import { toast } from "sonner";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -73,11 +74,11 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (product.sizes.length > 0 && !selectedSize) {
-      alert("Please select a size");
+      toast.error("Please select a size");
       return;
     }
     if (product.colors.length > 0 && !selectedColor) {
-      alert("Please select a color");
+      toast.error("Please select a color");
       return;
     }
 
@@ -88,6 +89,7 @@ export default function ProductDetailPage() {
       selectedColor: selectedColor || undefined,
     });
     
+    toast.success(`${product.name} added to cart`);
     openCart();
   };
 
@@ -323,8 +325,13 @@ export default function ProductDetailPage() {
             <button 
               onClick={() => {
                 if (!isMounted) return;
-                if (isWishlisted) removeFromWishlist(product!.id);
-                else addToWishlist(product!);
+                if (isWishlisted) {
+                  removeFromWishlist(product!.id);
+                  toast("Removed from wishlist");
+                } else {
+                  addToWishlist(product!);
+                  toast.success("Added to wishlist");
+                }
               }}
               className="h-14 w-14 border border-border flex items-center justify-center hover:border-accent hover:text-accent transition-colors"
             >

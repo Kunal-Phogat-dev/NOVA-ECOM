@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NOVA - Cyber-Luxury Fashion E-Commerce
 
-## Getting Started
+NOVA is a premium, cutting-edge fashion e-commerce platform built to demonstrate advanced front-end architecture, immersive design, and highly polished user experiences.
 
-First, run the development server:
+## 🚀 Architecture & Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Styling:** Tailwind CSS + custom glassmorphism & neon aesthetics
+- **Animations:** Framer Motion (page transitions, micro-interactions, layout animations)
+- **State Management:** Zustand (Cart, Wishlist, Auth)
+- **Icons:** Lucide React
+- **Toasts:** Sonner (Dark mode optimized)
+
+## ⚠️ Note for Recruiters & Reviewers (Mock Data)
+
+This application is built as a **frontend showcase**. To ensure rapid load times and easy local testing without external dependencies, **all product data, user sessions, and cart operations run entirely on Mock Data / LocalStorage via Zustand.**
+
+While the data is static, the architecture is fully production-ready:
+- The data is cleanly isolated in `src/lib/mock-data.ts`.
+- State management (`src/store/`) is separated from UI components.
+- Replacing the mock hooks with actual API calls (e.g., Supabase, Stripe, Shopify) would require zero changes to the UI layer.
+
+## 🌟 Key Features
+
+- **Premium UI/UX:** Skeletons, loading states, and custom empty states throughout the app.
+- **Dynamic Search:** Fully functional search modal filtering through mock products in real-time.
+- **Advanced Filtering:** Collections page features desktop sidebars and mobile sliding drawers for filtering by Category, Gender, and Color.
+- **Micro-interactions:** Extensive use of Framer Motion for hover states, cart drawer sliding, and mobile menu staggering.
+- **Edge Optimized:** Next.js `<Image />` component used heavily for performant LCP.
+
+## 🛠️ Getting Started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) with your browser to experience NOVA.
