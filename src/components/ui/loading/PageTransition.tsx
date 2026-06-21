@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function PageTransition() {
+function PageTransitionInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isNavigating, setIsNavigating] = useState(false);
@@ -34,5 +34,13 @@ export function PageTransition() {
         />
       )}
     </AnimatePresence>
+  );
+}
+
+export function PageTransition() {
+  return (
+    <Suspense fallback={null}>
+      <PageTransitionInner />
+    </Suspense>
   );
 }

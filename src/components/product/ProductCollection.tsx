@@ -99,8 +99,8 @@ export function ProductCollection({ title, description, products }: ProductColle
           <div>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-accent border-b border-border pb-2">Category</h3>
             <div className="space-y-2">
-              {availableCategories.map(category => (
-                <div key={category} onClick={() => toggleFilter(setSelectedCategories, selectedCategories, category)} className="flex items-center space-x-3 cursor-pointer group">
+              {availableCategories.map((category, idx) => (
+                <div key={`desktop-cat-${category}-${idx}`} onClick={() => toggleFilter(setSelectedCategories, selectedCategories, category)} className="flex items-center space-x-3 cursor-pointer group">
                   <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${selectedCategories.includes(category) ? "border-accent bg-accent/20" : "border-muted-foreground group-hover:border-accent"}`}>
                     {selectedCategories.includes(category) && <div className="w-2 h-2 bg-accent" />}
                   </div>
@@ -113,8 +113,8 @@ export function ProductCollection({ title, description, products }: ProductColle
           <div>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-accent border-b border-border pb-2">Gender</h3>
             <div className="space-y-2">
-              {availableGenders.map(gender => (
-                <div key={gender} onClick={() => toggleFilter(setSelectedGenders, selectedGenders, gender)} className="flex items-center space-x-3 cursor-pointer group">
+              {availableGenders.map((gender, idx) => (
+                <div key={`desktop-gen-${gender}-${idx}`} onClick={() => toggleFilter(setSelectedGenders, selectedGenders, gender)} className="flex items-center space-x-3 cursor-pointer group">
                   <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${selectedGenders.includes(gender) ? "border-accent bg-accent/20" : "border-muted-foreground group-hover:border-accent"}`}>
                     {selectedGenders.includes(gender) && <div className="w-2 h-2 bg-accent" />}
                   </div>
@@ -127,9 +127,9 @@ export function ProductCollection({ title, description, products }: ProductColle
           <div>
             <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-accent border-b border-border pb-2">Color</h3>
             <div className="flex flex-wrap gap-3">
-              {availableColors.map(color => (
+              {availableColors.map((color, idx) => (
                 <button
-                  key={color}
+                  key={`desktop-col-${color}-${idx}`}
                   onClick={() => toggleFilter(setSelectedColors, selectedColors, color)}
                   className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${selectedColors.includes(color) ? "border-accent scale-110 shadow-[0_0_10px_rgba(0,240,255,0.5)]" : "border-border"}`}
                   style={{ backgroundColor: color }}
@@ -163,8 +163,8 @@ export function ProductCollection({ title, description, products }: ProductColle
                 <div>
                   <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-accent border-b border-border pb-2">Category</h3>
                   <div className="space-y-4">
-                    {availableCategories.map(category => (
-                      <label key={category} className="flex items-center space-x-3 cursor-pointer">
+                    {availableCategories.map((category, idx) => (
+                      <label key={`mobile-cat-${category}-${idx}`} className="flex items-center space-x-3 cursor-pointer">
                         <input type="checkbox" checked={selectedCategories.includes(category)} onChange={() => toggleFilter(setSelectedCategories, selectedCategories, category)} className="w-5 h-5 accent-accent bg-transparent border-border" />
                         <span className="text-lg tracking-wide">{category}</span>
                       </label>
@@ -175,8 +175,8 @@ export function ProductCollection({ title, description, products }: ProductColle
                 <div>
                   <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-accent border-b border-border pb-2">Gender</h3>
                   <div className="space-y-4">
-                    {availableGenders.map(gender => (
-                      <label key={gender} className="flex items-center space-x-3 cursor-pointer">
+                    {availableGenders.map((gender, idx) => (
+                      <label key={`mobile-gen-${gender}-${idx}`} className="flex items-center space-x-3 cursor-pointer">
                         <input type="checkbox" checked={selectedGenders.includes(gender)} onChange={() => toggleFilter(setSelectedGenders, selectedGenders, gender)} className="w-5 h-5 accent-accent bg-transparent border-border" />
                         <span className="text-lg tracking-wide">{gender}</span>
                       </label>
@@ -187,9 +187,9 @@ export function ProductCollection({ title, description, products }: ProductColle
                 <div>
                   <h3 className="text-sm font-bold tracking-widest uppercase mb-4 text-accent border-b border-border pb-2">Color</h3>
                   <div className="flex flex-wrap gap-4">
-                    {availableColors.map(color => (
+                    {availableColors.map((color, idx) => (
                       <button
-                        key={color}
+                        key={`mobile-col-${color}-${idx}`}
                         onClick={() => toggleFilter(setSelectedColors, selectedColors, color)}
                         className={`w-10 h-10 rounded-full border-2 transition-transform ${selectedColors.includes(color) ? "border-accent scale-110 shadow-[0_0_10px_rgba(0,240,255,0.5)]" : "border-border"}`}
                         style={{ backgroundColor: color }}
