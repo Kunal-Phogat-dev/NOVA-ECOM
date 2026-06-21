@@ -10,7 +10,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { PageTransition } from "@/components/ui/loading/PageTransition";
-import { GlobalPreloader } from "@/components/ui/loading/GlobalPreloader";
 
 export default function RootLayout({
   children,
@@ -20,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark antialiased bg-background text-foreground">
       <body className="min-h-screen flex flex-col font-sans">
-        <GlobalPreloader />
         <PageTransition />
         <Navbar />
         <main className="flex-grow">{children}</main>
